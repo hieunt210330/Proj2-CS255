@@ -113,11 +113,12 @@
 		const dhSecretKey = await HMACtoAESKey(dhSecret, govEncryptionDataStr); 
 		const cGov = await encryptWithGCM(dhSecretKey, mkBuffer, ivGov); 
 		
-		const header = {vGov: newGovPair.pub, 
-		cGov: cGov, 
-		receiverIV: receiverIV, 
-		ivGov: ivGov,
-		pkSender: this.EGKeyPair[name].pubKey 
+		const header = {
+			vGov: newGovPair.pub, 
+			cGov: cGov, 
+			receiverIV: receiverIV, 
+			ivGov: ivGov,
+			pkSender: this.EGKeyPair[name].pubKey 
 		};
 
 		const ciphertext = await encryptWithGCM(mk, plaintext, receiverIV, JSON.stringify(header));
@@ -134,7 +135,8 @@
 	 *
 	 * Return Type: string
 	 */
-	async receiveMessage (name, [header, ciphertext]) {
+	async receiveMessage (name, [header, ciphertext]) 
+	{
 		if (!(name in this.conns)) 
 		{
 			const senderCertPk = this.certs[name].pubKey;
